@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
-import 'rbx/index.css';
 import { Button } from 'rbx';
-import Course from './Course/';
-import {buttonColor, getCourseTerm} from './Course/Course.js';
-import { terms, timeParts } from './Course/times.js'
+import Course from './Course/Course';
+import { buttonColor } from './Course/Course.js';
+import { terms, getCourseTerm } from './Course/time.js';
+
+const useSelection = () => {
+  const [selected, setSelected] = useState([]);
+  const toggle = (x) => {
+    setSelected(selected.includes(x) ? selected.filter(y => y !== x) : [x].concat(selected))
+  };
+  return [ selected, toggle ];
+};
 
 const TermSelector = ({ state }) => (
   <Button.Group hasAddons>
@@ -19,24 +26,6 @@ const TermSelector = ({ state }) => (
     }
   </Button.Group>
 );
-
-const useSelection = () => {
-  const [selected, setSelected] = useState([]);
-  const toggle = (x) => {
-    setSelected(selected.includes(x) ? selected.filter(y => y !== x) : [x].concat(selected))
-  };
-  return [ selected, toggle ];
-};
-
-const addCourseTimes = course => ({
-  ...course,
-  ...timeParts(course.meets)
-});
-
-const addScheduleTimes = schedule => ({
-  title: schedule.title,
-  courses: Object.values(schedule.courses).map(addCourseTimes)
-});
 
 const CourseList = ({ courses, user }) => {
   const [term, setTerm] = useState('Fall');
@@ -56,5 +45,4 @@ const CourseList = ({ courses, user }) => {
   );
 };
 
-export { addScheduleTimes }
 export default CourseList;

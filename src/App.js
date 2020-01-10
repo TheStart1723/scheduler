@@ -5,8 +5,8 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import CourseList from './components/CourseList';
-import { addScheduleTimes } from './components/CourseList.js';
 import { db } from './components/Course/Course.js';
+import { timeParts } from './components/Course/time.js';
 
 const uiConfig = {
   signInFlow: 'popup',
@@ -42,6 +42,16 @@ const Banner = ({ user, title }) => (
     <Title>{ title || '[loading...]' }</Title>
   </React.Fragment>
 );
+
+const addCourseTimes = course => ({
+  ...course,
+  ...timeParts(course.meets)
+});
+
+const addScheduleTimes = schedule => ({
+  title: schedule.title,
+  courses: Object.values(schedule.courses).map(addCourseTimes)
+});
 
 const App = () => {
   const [schedule, setSchedule] = useState({ title: '', courses: [] });
