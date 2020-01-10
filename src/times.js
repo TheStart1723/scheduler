@@ -36,4 +36,4 @@ const timeParts = meets => {
   };
 };
 
-export { terms, getCourseTerm, hasConflict, timeParts };
+export { terms, hasConflict, timeParts };

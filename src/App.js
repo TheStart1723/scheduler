@@ -6,8 +6,7 @@ import 'firebase/auth';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import CourseList from './components/CourseList';
 import { addScheduleTimes } from './components/CourseList.js';
-import { db } from './components/Course/Course';
-import { timeParts } from './components/Course/times.js';
+import { db } from './components/Course/Course.js';
 
 const uiConfig = {
   signInFlow: 'popup',
